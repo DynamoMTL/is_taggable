@@ -31,7 +31,14 @@ Calling is_taggable with any arguments defaults to a tag_list. Instantiating our
 
 A comma is the default tag separator, but this can be easily changed:
 
-  IsTaggable::TagList.delimiter = " "
+  IsTaggable::TagList.splitter = " "
+
+In addition, you can change the splitter and the joiner like so:
+
+  IsTaggable::TagList.splitter = /,\s*/
+  IsTaggable::TagList.joiner   = ', '
+
+This way, even if the input has a lot of spaces, you can control the taglist to be nice and tidy.
 
 == Get it
 

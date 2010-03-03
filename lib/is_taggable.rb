@@ -5,16 +5,20 @@ require 'tagging'
 
 module IsTaggable
   class TagList < Array
-    cattr_accessor :delimiter
-    @@delimiter = ','
+    cattr_accessor :splitter
+    @@splitter  = /,\s*/
+    
+    cattr_accessor :joiner
+    @@joiner    = ', '
+    
     
     def initialize(list)
-      list = list.is_a?(Array) ? list : list.split(@@delimiter).collect(&:strip).reject(&:blank?)
+      list = list.is_a?(Array) ? list : list.split(@@splitter).collect(&:strip).reject(&:blank?)
       super
     end
     
     def to_s
-      join(@@delimiter)
+      join(@@joiner)
     end
   end
 

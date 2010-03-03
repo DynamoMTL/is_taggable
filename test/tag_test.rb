@@ -14,7 +14,7 @@ Expectations do
   end
 
   expect Tag.new.not.to.be.valid?
-  expect String do
+  expect Array do
     t = Tag.new
     t.valid?
     t.errors[:name]

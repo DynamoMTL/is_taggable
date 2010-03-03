@@ -7,9 +7,10 @@ class Tag < ActiveRecord::Base
 
   has_many :taggings, :dependent => :destroy
 
-  validates_presence_of :name
-  validates_uniqueness_of :name, :scope => :kind
+  validates :name, 
+    :presence => true,
+    :uniqueness => { :scope => :kind }
 
-  scope :with_name_like_and_kind, lambda { |name, kind| { :conditions => ["name like ? AND kind = ?", name, kind] } }
-  scope :of_kind,                 lambda { |kind| { :conditions => {:kind => kind} } }
+  scope :with_name_like_and_kind, lambda { |name, kind| where("name like ? AND kind = ?", name, kind) }
+  scope :of_kind,                 lambda { |kind| where(:kind => kind) }
 end

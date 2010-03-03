@@ -15,9 +15,9 @@ Expectations do
   end
   
   expect ["one", "two"] do
-    IsTaggable::TagList.delimiter = " "
+    IsTaggable::TagList.splitter = " "
     n = Comment.new :tag_list => "one two"
-    IsTaggable::TagList.delimiter = "," # puts things back to avoid breaking following tests
+    IsTaggable::TagList.splitter = /,\s*/ # puts things back to avoid breaking following tests
     n.tag_list
   end
 
@@ -49,9 +49,17 @@ Expectations do
     p.language_list
   end
 
-  expect "english,french" do
+  expect "english, french" do
     p = Post.new :language_list => "english, french"
     p.language_list.to_s
+  end
+  
+  expect "english french" do
+    IsTaggable::TagList.joiner = ' '
+    p = Post.new :language_list => 'english, french'
+    p.language_list.to_s.tap do
+      IsTaggable::TagList.joiner = ', '
+    end
   end
   
   # added - should clean up strings with arbitrary spaces around commas
