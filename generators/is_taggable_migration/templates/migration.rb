@@ -1,7 +1,6 @@
 class IsTaggableMigration < ActiveRecord::Migration
   def self.up
     create_table :tags do |t|
-      t.string :name, :default => ''
       t.string :kind, :default => '' 
     end
 
@@ -12,13 +11,17 @@ class IsTaggableMigration < ActiveRecord::Migration
       t.integer :taggable_id
     end
     
-    add_index :tags,     [:name, :kind]
+    add_index :tags,     :kind
     add_index :taggings, :tag_id
     add_index :taggings, [:taggable_id, :taggable_type]
+
+    Tag.create_translation_table! :name => :string
   end
   
   def self.down
     drop_table :taggings
     drop_table :tags
+
+    Tag.drop_translation_table!
   end
 end

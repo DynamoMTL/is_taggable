@@ -7,10 +7,13 @@ class Tag < ActiveRecord::Base
 
   has_many :taggings, :dependent => :destroy
 
-  validates :name, 
-    :presence => true,
-    :uniqueness => { :scope => :kind }
+  translates :name
 
-  scope :with_name_like_and_kind, lambda { |name, kind| where("name like ? AND kind = ?", name, kind) }
+  # TODO: Resolve translations
+  # validates :name, 
+  #   :presence => true,
+  #   :uniqueness => { :scope => :kind }
+
+  scope :with_name_like_and_kind, lambda { |name, kind| joins(:translations).where("tag_translations.name like ? AND kind = ?", name, kind) }
   scope :of_kind,                 lambda { |kind| where(:kind => kind) }
 end

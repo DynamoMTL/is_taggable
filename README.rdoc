@@ -1,3 +1,7 @@
+== Important
+
+This fork works with Globalize3. It is currently missing Tag#name validations which needs to be resolved.
+
 = is_taggable
 
 At last, a short and sweet tagging implementation that you can easily modify and extend.
